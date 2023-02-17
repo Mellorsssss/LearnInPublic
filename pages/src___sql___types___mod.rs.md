@@ -1,0 +1,2 @@
+- 定义基本的Value以及DataType，以及Value之间的基本比较、转换规则。Value为data internal representation，目前只支持Integer, Boolean, Float, String五种数据类型。
+-

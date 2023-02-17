@@ -1,0 +1,5 @@
+- 算法
+	- dispatch:根据类层次(class hierarchy)，使用方法签名(method signature)找到最近的一个non-abstract method
+	- 主算法
+		- ![image.png](../assets/image_1675784376159_0.png)
+-

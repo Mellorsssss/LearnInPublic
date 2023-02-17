@@ -1,0 +1,1 @@
+- 对于基于某个时间戳的全序$$\prec$$，如果有$$a\to b \Rightarrow a \prec b$$，其中$$a, b$$为两个事件，则说$$\prec$$是一个causal order
