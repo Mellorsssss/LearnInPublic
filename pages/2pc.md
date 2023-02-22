@@ -1,1 +1,2 @@
-- 又称两阶段提交协议，分为prepare阶段和commit阶段
+- 又称两阶段提交协议，分为prepare阶段和commit阶段。一个节点充当中心化的协调者，通知其他带数据节点是否需要提交（commit）或终止（abort）
+	- prepare阶段中
