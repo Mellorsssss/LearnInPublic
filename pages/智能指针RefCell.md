@@ -1,1 +1,1 @@
-- RefCell可以绕过静态的rust borrower检查，在运行时执行rust的
+- RefCell可以绕过静态的rust borrower检查，在运行时执行[[rust的引用规则]]
