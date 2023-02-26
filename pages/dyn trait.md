@@ -1,1 +1,5 @@
-- rust中通过trait对象可以实现**多态**，rust中又把
+- rust中通过trait对象可以实现**多态**，rust book中把该特性和鸭子类型进行对比，但是相比python中的鸭子类型，rust可以在编译器进行检查
+- trait对象的前提：
+	- trait中任何一个方法的返回值都不是Self
+	- trait中任何一个方法不带泛型
+		-
