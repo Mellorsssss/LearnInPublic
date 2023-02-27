@@ -1,2 +1,4 @@
 - sql life:
-	-
+	- ![image.png](../assets/image_1677499515447_0.png)
+- parse
+	- 解析成ast，没有bind
