@@ -17,3 +17,9 @@
 		- join reorder
 		- 尝试不同join算法
 		- index selection
+- distsql plan
+	- 综合考虑locality，生成最后的分布式执行计划
+-
+- choose plan
+	- 使用cost-based
+		-
