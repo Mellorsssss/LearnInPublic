@@ -1,4 +1,5 @@
--
+- big picture：
+	- cost-based optimizer
 - sql life:
 	- ![image.png](../assets/image_1677499515447_0.png)
 - parse
@@ -6,5 +7,9 @@
 - optbuild
 	- 进行semantic analysis，这个时候应该会bind一些catalog中的信息
 - normalize
-	- 应用一些“基本上肯定会有收益“的优化策略，例如not(not(expr))转换成expr这样的优化
+	- 应用一些“基本上肯定会有收益“的优化策略，例如：
+		- not(not(expr))转换成expr这样的优化
+		- 谓词下推
+		- 子查询去关联化
+		- 常量折叠
 -
