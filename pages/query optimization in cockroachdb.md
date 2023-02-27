@@ -31,4 +31,4 @@
 				- ...
 			- 在执行计划过程中收集信息
 - locality
-	- 主要分成region
+	- 主要分成regional和global两类表，对于前者会加一个隐藏column用来过滤
