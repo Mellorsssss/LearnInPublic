@@ -1,6 +1,10 @@
+-
 - sql life:
 	- ![image.png](../assets/image_1677499515447_0.png)
 - parse
 	- 解析成ast，看起来没有bind catalog中的信息
 - optbuild
 	- 进行semantic analysis，这个时候应该会bind一些catalog中的信息
+- normalize
+	- 应用一些“基本上肯定会有收益“的优化策略，例如not(not(expr))转换成expr这样的优化
+-
