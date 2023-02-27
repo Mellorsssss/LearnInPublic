@@ -12,4 +12,8 @@
 		- 谓词下推
 		- 子查询去关联化
 		- 常量折叠
--
+- exploration
+	- 对已经生成的plan中的各个部分尝试使用一些特殊的rule
+		- join reorder
+		- 尝试不同join算法
+		- index selection
