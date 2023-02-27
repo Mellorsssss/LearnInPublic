@@ -1,4 +1,6 @@
 - sql life:
 	- ![image.png](../assets/image_1677499515447_0.png)
 - parse
-	- 解析成ast，没有bind
+	- 解析成ast，看起来没有bind catalog中的信息
+- optbuild
+	- 进行semantic analysis，这个时候应该会bind一些catalog中的信息
