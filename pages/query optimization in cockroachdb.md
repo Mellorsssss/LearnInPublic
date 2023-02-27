@@ -22,4 +22,6 @@
 -
 - choose plan
 	- 使用cost-based
+		- 硬件配置
+		- 数据分布
 		-
