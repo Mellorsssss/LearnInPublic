@@ -1,0 +1,3 @@
+- [[PAX]]
+- [[column-specific compression]]
+- [[late materialization]]

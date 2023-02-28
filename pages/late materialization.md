@@ -1,0 +1,3 @@
+- core idea
+	- 尽量使用virtual id来替代具体的行，延缓reconstruct tuple的时间
+	- ![image.png](../assets/image_1677583615822_0.png)

@@ -1,0 +1,3 @@
+- 游程编码
+- bitmap index
+- dictionary
