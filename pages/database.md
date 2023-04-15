@@ -1,0 +1,5 @@
+- [[cstore]]
+- [[query optimization in cockroachdb]]
+- [[query execution]]
+- [[query optimization]]
+- [[concurrency control]]

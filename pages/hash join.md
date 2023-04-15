@@ -1,0 +1,11 @@
+- 算法
+	- **build**：对于outer table，使用join key作为key来构造一个hash table，相同join key的tuple必然在一个bucket中，但同一个bucket中的tuple的join key不一定完全一样
+	- **probe**: 对于每一个inner table中的tuple，使用join key找到先前构造的hash table中的所有tuple，判断哪些满足join key相等
+- naive implementation
+	- 只考虑数据全部可以放在内存中。那么实际上可以使用一个map<join key, vector<tuple>>来作为hash table。
+- normal implementation
+	- 将内存中无法放下的hash table放到disk上，必要时读出。
+- 优化
+	- probe：使用Bloom filter筛选掉一些明显没有join key的inner tuple
+	- grace hash join：对于在内存中无法某一个join key的hash table的情况，对该join key应用递归应用不同hash function并进行partition
+	- hybrid hash join: 对于热点数据，保存在内存中

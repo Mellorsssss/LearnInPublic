@@ -1,0 +1,4 @@
+- [[projection push down]]
+- [[predicate push down]]
+- [[aggregate push down]]
+- [[optimize sub-query]]

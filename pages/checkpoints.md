@@ -1,0 +1,7 @@
+- 基本思想
+	- 在事务执行过程中，间断性保存当前数据的快照
+	- 为什么
+		- log可能快速增长
+		- 每次重启之后重放log不实际（raft中的checkpoints实际上是一样的思想）
+- [[non-fuzzy checkpoints]]
+- [[fuzzy checkpoints]]

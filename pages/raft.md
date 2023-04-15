@@ -1,8 +1,53 @@
-- 基础
-- 优化
-  collapsed:: true
+- 算法
+	- 选举算法
+	- 日志复制算法
+	- 如何保证一致性
+	- configuration change
+		- 思想
+			- 需要保证在conf change过程中，不会同时出现两个leader同时对外服务
+			- 保证在conf change过程中，当前集群中的所有节点依然可以对外进行服务
+		- joint consensus算法
+			- 将conf change视作一种特殊的log entry，leader将根据conf中的**新conf部分判断是否commit成功**。如果commit成功，那么leader创建一个新的conf log entry表示已经切换到了新conf
+			- 正确性？
+				-
+		- 难点
+			- 新加入的节点往往没有任何日志，会对系统的可用性造成影响
+				- 在开始conf change之前加入一个额外用于同步日志的阶段。在该阶段中，新加入的节点作为非follower节点同步leader中的日志
+			- 转换到新conf之前的过渡leader可能不在新conf中
+			- 旧server干扰
+				- 一些不在新conf中的节点在conf变更完成之后仍然可能会发起选举，会产生不需要的重新选举
+				- 解决方案
+					- 类似lease read，节点在每次收到leader的RPC之后更新一个长度为election timeout的租约，该期间收到的所有RequestVote RPC均无视
+- 算法层面优化
 	- prevote
 	  collapsed:: true
-		- [[动机]]：发生网络分区故障时，follower触发超时不断发起选举并递增term。当网络分区故障恢复时，follower的term可能大于当前leader的term，将会产生1次不必要的选举：当前follower由于logs往往远远旧于leader的logs，无法成为leader，只有等到下一轮超时时qurom中的节点重新成为leader。毫无疑问，两次失败的选举给系统带来了不必要的抖动。
-		- 思路：在candiate发现自身无法成为leader时不更改term，从而避免term“过度膨胀”的问题。由于candiate发现自身是否可以成为leader依然需要通过RequestVote RPC（不过不会发生真正的投票），该技术被称作prevote
--
+		- 动机
+		  collapsed:: true
+			- 发生网络分区故障时，follower触发超时不断发起选举并递增term。当网络分区故障恢复时，follower的term可能大于当前leader的term，将会产生1次不必要的选举：当前follower由于logs往往远远旧于leader的logs，无法成为leader，只有等到下一轮超时时qurom中的节点重新成为leader。毫无疑问，两次失败的选举给系统带来了不必要的抖动。
+		- 思路
+		  collapsed:: true
+			- 在candiate发现自身无法成为leader时不更改term，从而避免term“过度膨胀”的问题。由于candiate发现自身是否可以成为leader依然需要通过RequestVote RPC（不过不会发生真正的投票），该技术被称作prevote
+	- lease read
+		- 思想
+			- raft中的leader变更是需要一个超时时间的，当start时间点发送的某个rpc被回复时，可以确认start + election_timeout之间都不会发生超时
+		- 算法
+			- 在一些请求之后更新租期
+	- read index
+		- 思路
+			- 保证执行的读请求的节点必须要有当前最新的log
+		- 算法
+			- 获取当前的commitIndex当做readIndex
+			- 直到确认当前leader拥有最新的log，向所有节点发送一个心跳确认是否还是leader
+			- 确认自身是leader之后，当applyIndex超过readIndex之后就可以返回读请求
+		- 对于follower
+			- 因为follower上的日志可能是旧的，所以需要向leader获取readIndex并且在本地等待applyIndex超过readIndex
+		- 优点
+			- 减少了log（特别是在读多的系统上）
+			- 减少了网络通信（只需要一轮通信）
+		- 缺点
+			- 还是需要网络通信
+- 工程层面优化
+	- 批处理
+	- 流水线
+	- 异步append log
+	- 异步apply

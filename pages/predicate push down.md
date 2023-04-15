@@ -1,0 +1,3 @@
+- 尽量早使用predicate
+- 尽量将最能筛选掉tuple的predicate放在前面
+- 将一个复杂predicate拆分成不相关的predicate并且分发给不同的算子

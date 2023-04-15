@@ -1,0 +1,9 @@
+- abort时写入具体如何进行undo的log，保存一个next-undo字段指向下一个需要被undo的log
+	- 为什么需要一个Next-undo字段？
+		- 我的理解是CLR可能无法恰好undo所有的log，这时需要快速定位到剩余哪些log需要进行undo（显然，这种情况只会发生在写CLR到一半，db崩溃，重新启动db）
+	- next-undo和prevLsn区别？
+		- 前者的作用在上面已经解释，后者是为了提高找到同一个txn的速度
+- CLR本身不需要再被undo
+	- 因为它对应一条log的undo
+	- 同理，对应的log也不需要undo了
+- WAL规则本身保证了，如果被一个aborted txn修改过的页被刷盘，CLR一定已经也被刷盘，最终可以正常地undo

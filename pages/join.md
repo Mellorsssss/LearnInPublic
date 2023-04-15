@@ -1,0 +1,6 @@
+- 设计中需要考虑的要素
+	- early materialization
+	- late materialization
+- 具体实现
+	- [[hash join]]
+-

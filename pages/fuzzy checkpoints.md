@@ -1,0 +1,23 @@
+- 基本思想
+	- 在生成checkpoints的同时允许txn继续执行
+	- 使用checkpoint begin以及checkpoint end两条log标志生成checkpoint的过程
+	- 需要保存ATT以及DPT两类数据结构
+-
+- 阶段
+	- 分析阶段
+		- 从checkpoint begin开始扫描所有的Log，并且更新ATT以及DPT
+		- 结束时，分析出DPT中recLSN最小的log，重做阶段将从该log开始
+			- 为什么
+				- recLSN表示将该页变成脏页的LSN，也就是意味着这个LSN之前的所有变化都已经被成功刷盘，只需要关注recLSN之后的
+	- 重做阶段
+		- 从分析阶段找到的LSN开始扫描所有log，并且重做，除非该log中的涉及的页不在DPT中或者已经被刷盘
+			- 如何重做？
+				- 重放对应的log（例如update、delete等）
+				- 更新对应的页的pageLSN（最近一次更新的LSN）
+		- 对所有处于C状态但是没有写TXN_END的txn，添加一条TXN_END
+	- 撤销阶段
+		- 撤销所有ATT中的处于U状态的txn，对于每一个undo写一条CLR（与 [[Abort algorithm]]中的做法类似）
+		- 全部完成之后需要添加对应的TXN_END
+- 经典问题
+	- 恢复过程中挂了怎么办？
+		- 从头再来~~
